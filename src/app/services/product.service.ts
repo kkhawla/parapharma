@@ -1,47 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 
+import { Categories } from 'src/app/models/categories';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+  
+
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class ProductService {
 
-  private products: Product[] = [
-    {
-        id: '965821',
-        title: 'cosmétique',
-        price: 45,
-        createdat:'20-03-2021',
-        categoryname:'médicament',
-        categoryid:'1234567'
-    },
-    {
-        id: '965822',
-        title: 'medicament',
-        price: 25,
-        createdat:'20-02-2021',
-        categoryname:'bébé',
-        categoryid:'654321'
+  @Injectable()
+  export class ProductService {
+  
+    constructor(private http:HttpClient) {}
+  
+    private url = 'https://localhost:5001';
+    //private categoryUrl="https://run.mocky.io/v3/db2e868c-ec0f-4cc6-b3d7-bbc2fa657b9a?fbclid=IwAR1E0of4WdvXKJM-mF9ov_idT7sOSy27np6BTrXp-c2LAyupisavZvM8FmE";
+    products: Product[] = []
+    public getCategories(){
+      return this.http.get<Categories>(this.url);
     }
-  ];
-
-  constructor() { }
-
-  getProductsFromData(): Product[] {
-    return this.products;
+    public getProducts(){
+      return this.http.get<Product[]>(this.url+"/api/products/all");
+    }
+    public deleteproduct(id:string){
+      return this.http.delete(this.url+'/api/products/delete'+id);
+    }
   }
-
-//   addUser(user: User) {
-//     user.id = this.upersons.length + 1;
-//     this.upersons.push(user);
-
-//   }
-//   updateUser(user: User) {
-//     const index = this.upersons.findIndex(u => user.id === u.id);
-//     this.upersons[index] = user;
-//   }
-//   deleteUser(user: User) {
-//     this.upersons.splice(this.upersons.indexOf(user), 1);
-//   }
-
-}

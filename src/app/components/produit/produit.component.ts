@@ -27,6 +27,14 @@ export class ProduitComponent implements OnInit {
       console.log(data);
     });
   }
+  removeProduit(produit:Produit){
+    if(confirm("are you sure to delete"+produit.title)){
+      this.produitService.deleteproduit(produit.id).subscribe(data=> {
+        alert('§{produit.title} is delete successfully')
+        this.getProduits();
+      });
+    }
+  }
   getCategories(){
     this.produitService.getCategories()
     .subscribe( data => {

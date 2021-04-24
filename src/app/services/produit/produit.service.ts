@@ -19,14 +19,17 @@ const httpOptions = {
   
     constructor(private http:HttpClient) {}
   
-    private url = 'https://localhost:44373/api/produit/all';
-    private categoryUrl="https://run.mocky.io/v3/db2e868c-ec0f-4cc6-b3d7-bbc2fa657b9a?fbclid=IwAR1E0of4WdvXKJM-mF9ov_idT7sOSy27np6BTrXp-c2LAyupisavZvM8FmE";
+    private url = 'https://localhost:44373';
+    //private categoryUrl="https://run.mocky.io/v3/db2e868c-ec0f-4cc6-b3d7-bbc2fa657b9a?fbclid=IwAR1E0of4WdvXKJM-mF9ov_idT7sOSy27np6BTrXp-c2LAyupisavZvM8FmE";
     produits: Produit[] = []
     public getCategories(){
       return this.http.get<Categories>(this.url);
     }
     public getProduits(){
-      return this.http.get<Produit[]>(this.url);
+      return this.http.get<Produit[]>(this.url+"/api/products/all");
+    }
+    public deleteproduit(id:string){
+      return this.http.delete(this.url+'/api/products/delete'+id);
     }
 
     
